@@ -1,0 +1,23 @@
+@MessagingExample.Server_HostAddress = http://localhost:5281
+
+POST {{MessagingExample.Server_HostAddress}}/createmessage/
+Accept: application/json
+Body:{
+  headers:{
+    {
+      data1:"",
+      data2:""
+    },
+    {
+      data1:"",
+      data2:""
+    }
+  },
+  content:{
+    property1:"",
+    property2:"",
+    property3:""
+  }
+}
+
+###

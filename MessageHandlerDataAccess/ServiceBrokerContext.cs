@@ -4,8 +4,22 @@ namespace MessageHandlerDataAccess
 {
     public class ServiceBrokerContext : DbContext
     {
-        public DbSet<Payload> Payloads { get; private set; }
-        public DbSet<IEnumerable<Header>> Headers { get; private set; }
-        public DbSet<Body> Body { get; private set; }
+        public DbSet<Payload> Payloads { get; set; }
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Payload>(b =>
+                {
+                    b.HasKey(e => e.Id);
+                    b.Property(e => e.Id)
+                        .ValueGeneratedOnAdd(); 
+                }
+
+
+            );
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

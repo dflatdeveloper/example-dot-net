@@ -1,15 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
-interface Header {
-  data1: string;
-  data2: string;
-
-}
-
-interface Payload {
-  headers: Header[];
-  content: string;
+interface WeatherForecast {
+  date: string;
+  temperatureC: number;
+  temperatureF: number;
+  summary: string;
 }
 
 @Component({
@@ -18,18 +14,18 @@ interface Payload {
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  public payloads: Payload[] = [];
+  public forecasts: WeatherForecast[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    this.getPayloads();
+    this.getForecasts();
   }
 
-  getPayloads() {
-    this.http.get<Payload[]>('/message').subscribe(
+  getForecasts() {
+    this.http.get<WeatherForecast[]>('/weatherforecast').subscribe(
       (result) => {
-        this.payloads = result;
+        this.forecasts = result;
       },
       (error) => {
         console.error(error);
@@ -37,5 +33,5 @@ export class AppComponent implements OnInit {
     );
   }
 
-  title = 'Messaging Example';
+  title = 'angularapp1.client';
 }

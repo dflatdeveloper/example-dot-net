@@ -1,0 +1,22 @@
+<h1 id="tableLabel">Payloads</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+<p *ngIf="!payloads$"><em>Loading... Hey knuckle head if you can read this, start the services.</em></p>
+
+<table *ngIf="payloads$">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Content</th>
+      <th>Workflow Completed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let payload of payloads$">
+      <td>{{ payload.id }}</td>
+      <td>{{ payload.content }}</td>
+      <td>{{ payload.receiverAcknowledged }}</td>
+    </tr>
+  </tbody>
+</table>

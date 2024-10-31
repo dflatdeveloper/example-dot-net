@@ -1,9 +1,9 @@
 ﻿namespace MessageHandlerDataAccess
 {
-    public class Payload
+    public record Payload
     {
-        public IEnumerable<Header>? Headers { get; private set; } = null;
-        public ICustomData? Content { get; private set; } = null;
-        public IPayloadSecurityManager? PayloadSecurityManager { get; private set; } = null;
+        public int? Id { get; set; }
+        public string? Content { get; set; } = null;
+        public bool ReceiverAcknowledged { get; set; } = false;
     }
 }

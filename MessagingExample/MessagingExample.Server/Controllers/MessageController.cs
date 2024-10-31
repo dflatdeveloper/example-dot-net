@@ -1,30 +1,42 @@
 ﻿using MessageHandlerDataAccess;
+using MessagingExample.Server.Factories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MessagingExample.Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class MessageController : Controller
+    public class MessageController(ILogger<MessageController> logger, ServiceBrokerContext dbContext, IPayloadFactory payloadFactory) : Controller
     {
-       
-        private readonly ILogger<MessageController> _logger;
-
-        public MessageController(ILogger<MessageController> logger)
+        [HttpPost(Name = "createpayload")]
+        public IActionResult Create(string content)
         {
-            _logger = logger;
+            logger.LogInformation($"Creating new payload with content: {content}");
+
+
+            var payload = payloadFactory.CreatePayload();
+
+            payload.Content = content;  
+
+            dbContext.Add(payload);
+            dbContext.SaveChanges();
+
+            return new OkResult();
         }
 
-        [HttpPost(Name = "CreateMessage")]
-        public IActionResult Create(string data1, string data2)
-        {
-            return null;
-        }
-
-        [HttpGet(Name ="GetMessage")]
+        [HttpGet(Name ="payloads")]
         public IEnumerable<Payload> Get()
         {
-            return null;
+            logger.LogInformation("Getting Payloads");
+            return dbContext.Payloads;
+        }
+
+        [HttpGet(Name = "payload")]
+        public Payload? GetPayload(int id)
+        {
+            logger.LogInformation($"Getting Payload id {id}");
+            return dbContext.Payloads.Where(p => p.Id == id).DefaultIfEmpty(defaultValue: null).SingleOrDefault();
+
         }
     }
 }

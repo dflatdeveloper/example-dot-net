@@ -5,4 +5,6 @@
 
 
 using MessageHandlerDataAccess;
+using System.Diagnostics;
 
+Console.WriteLine("TEST 1");
